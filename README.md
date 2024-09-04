@@ -26,7 +26,7 @@ bun install
 
 Next, create a `.env` file in the root of the project and add the following environment variables:
 
-> Note: You can get the `DATABASE_URL` and `DIRECT_URL` via [supabase](https://supabase.io)
+> Note: You can get the `POSTGRES_PRISMA_URL` and `POSTGRES_URL_NON_POOLING` via [vercel](https://vercel.com/docs/storage)
 
 ```bash
 cp .env.example .env
