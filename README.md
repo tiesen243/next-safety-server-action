@@ -26,6 +26,8 @@ bun install
 
 Next, create a `.env` file in the root of the project and add the following environment variables:
 
+> Note: You can get the `DATABASE_URL` and `DIRECT_URL` via [supabase](https://supabase.io)
+
 ```bash
 cp .env.example .env
 ```
@@ -33,7 +35,6 @@ cp .env.example .env
 Then, run the development server:
 
 ```bash
-./start-database.sh
 bun db:push
 bun dev
 ```
