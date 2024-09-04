@@ -1,7 +1,7 @@
 import { XIcon } from 'lucide-react'
 import Link from 'next/link'
 
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { actions } from '@/server/actions'
 
 export const PostList: React.FC<{ page?: number }> = async ({ page = 1 }) => {
@@ -33,17 +33,15 @@ export const PostList: React.FC<{ page?: number }> = async ({ page = 1 }) => {
 
       <div className="flex gap-2">
         {Array.from({ length: totalPage }, (_, i) => i + 1).map((p) => (
-          <Link
+          <Button
             key={p}
-            href={{ query: { page: p } }}
-            className={buttonVariants({
-              size: 'icon',
-              variant: 'outline',
-              className: p === +page && 'bg-accent text-accent-foreground',
-            })}
+            size="icon"
+            variant="outline"
+            className={p == page ? 'bg-accent text-accent-foreground' : ''}
+            asChild
           >
-            {p}
-          </Link>
+            <Link href={{ query: { page: p } }}>{p}</Link>
+          </Button>
         ))}
       </div>
     </ul>

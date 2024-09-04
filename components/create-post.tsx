@@ -26,7 +26,7 @@ export const CreatePost: React.FC = () => {
   return (
     <form ref={formRef} action={action} className="mx-auto w-1/2 space-y-4">
       <fieldset name="content" disabled={isPending}>
-        <Input name="content" />
+        <Input name="content" placeholder="What's on your mind?" />
         <small className="text-destructive">{validationErrors?.fieldErrors?.content}</small>
       </fieldset>
 
