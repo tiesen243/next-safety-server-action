@@ -1,8 +1,9 @@
 'use server'
 
-import { lucia } from '@/server/auth/lucia'
-import { protectedAction } from '../safe-action'
 import { cookies } from 'next/headers'
+
+import { lucia } from '@/server/auth/lucia'
+import { protectedAction } from '@/server/actions/safe-action'
 
 export const logout = protectedAction.metadata({ name: 'logout' }).action(async ({ ctx }) => {
   await lucia.invalidateSession(ctx.session.id)

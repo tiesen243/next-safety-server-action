@@ -1,5 +1,7 @@
-import { logout } from '@/server/actions/routes/auth'
+import * as auth from '@/server/actions/routes/auth'
+import * as post from '@/server/actions/routes/post'
 
 export const actions = {
-  auth: { logout },
+  auth,
+  post,
 }
