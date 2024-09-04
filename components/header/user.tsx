@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { useSession } from '@/lib/session'
-import Image from 'next/image'
+import { actions } from '@/server/actions'
 
 export const User: React.FC = () => {
   const { isAuth, user } = useSession()
@@ -19,9 +20,14 @@ export const User: React.FC = () => {
         className="rounded-full object-cover"
       />
 
-      <div className="space-y-1">
+      <div className="flex flex-col items-start">
         <p>{user.userName}</p>
-        <small className="text-muted-foreground">{user.email}</small>
+        <button
+          onClick={() => actions.auth.logout()}
+          className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Logout
+        </button>
       </div>
     </div>
   )
