@@ -10,8 +10,8 @@ interface Seo {
 }
 
 export const seo = (params: Seo): Metadata => {
-  const title = params.title ? `${params.title} | NSA` : 'NSA'
-  const description = params.description ?? 'Next.js safe action'
+  const title = params.title ? `${params.title} | Yucky` : 'Yucky'
+  const description = params.description ?? 'Next.js safety server action template'
   const images = params.images ?? [{ url: '/api/og' }]
   const url = params.url ? `${getBaseUrl()}${params.url}` : getBaseUrl()
 
