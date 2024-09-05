@@ -11,16 +11,7 @@ const adapter = new PrismaAdapter(db.session, db.user)
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: { expires: false, attributes: { secure: env.NODE_ENV === 'production' } },
-  getUserAttributes: (attributes) => ({
-    id: attributes.id,
-    discordId: attributes.discordId,
-
-    email: attributes.email,
-    userName: attributes.userName,
-    avatar: attributes.avatar,
-
-    password: attributes.password,
-  }),
+  getUserAttributes: (attributes) => attributes,
 })
 
 export const discord = new Discord(

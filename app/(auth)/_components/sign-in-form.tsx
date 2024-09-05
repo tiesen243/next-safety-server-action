@@ -6,12 +6,12 @@ import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { FormField } from '@/components/ui/form-field'
-import { actions } from '@/server/actions'
+import { signIn } from '@/server/actions/routes/auth'
 
 export const SignInForm: React.FC = () => {
   const router = useRouter()
 
-  const { execute, isPending, result } = useAction(actions.auth.signIn, {
+  const { execute, isPending, result } = useAction(signIn, {
     onSuccess: () => {
       toast.success('Logged in successfully')
       router.push('/')
