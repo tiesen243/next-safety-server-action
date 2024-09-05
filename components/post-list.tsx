@@ -15,7 +15,9 @@ export const PostList: React.FC<{ page?: number }> = async ({ page = 1 }) => {
       {posts.map((post) => (
         <li key={post.id} className="rounded-lg border p-4 shadow-md">
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">{post.content}</h3>
-          <small className="text-muted-foreground">By {post.user.userName}</small>
+          <small className="text-muted-foreground">
+            By {post.user.userName} at {post.createdAt.toDateString()}
+          </small>
 
           <form
             action={async () => {

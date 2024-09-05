@@ -4,6 +4,7 @@ import { z } from 'zod'
 
 import { publicAction, protectedAction } from '@/server/actions/safe-action'
 import { revalidateTag } from 'next/cache'
+import { zfd } from 'zod-form-data'
 
 export const getPosts = publicAction
   .metadata({ name: 'getPosts' })
@@ -13,7 +14,7 @@ export const getPosts = publicAction
       take: limit,
       skip: (page - 1) * limit,
       orderBy: { createdAt: 'desc' },
-      select: { id: true, content: true, user: { select: { userName: true } } },
+      select: { id: true, content: true, createdAt: true, user: { select: { userName: true } } },
     })
     if (!posts || posts.length < 1) throw new Error('No posts found')
 
@@ -33,7 +34,7 @@ export const getPost = publicAction
 
 export const createPost = protectedAction
   .metadata({ name: 'createPost' })
-  .schema(z.object({ content: z.string().min(1, 'Content is required') }))
+  .schema(zfd.formData({ content: z.string().min(1, 'Content is required') }))
   .action(async ({ parsedInput: { content }, ctx }) => {
     const newPost = await ctx.db.post.create({
       data: { content, user: { connect: { id: ctx.user.id } } },
