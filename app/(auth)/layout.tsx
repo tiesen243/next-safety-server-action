@@ -17,15 +17,9 @@ const AuthLayout: React.FC<React.PropsWithChildren> = async ({ children }) => {
           <div className="h-0.5 w-full bg-border" /> or <div className="h-0.5 w-full bg-border" />
         </div>
 
-        <div className="flex w-full flex-col gap-2 md:flex-row [&>*]:w-full">
-          <Button variant="outline" asChild>
-            <Link href="/api/auth/discord">Continue with Discord</Link>
-          </Button>
-
-          <Button variant="outline" asChild>
-            <Link href="/api/auth/github">Continue with GitHub</Link>
-          </Button>
-        </div>
+        <Button variant="outline" asChild>
+          <Link href="/api/auth/discord">Continue with Discord</Link>
+        </Button>
       </div>
     </main>
   )

@@ -17,7 +17,6 @@ export const lucia = new Lucia(adapter, {
     discordId: attributes.discordId,
 
     email: attributes.email,
-    name: attributes.name,
     userName: attributes.userName,
     avatar: attributes.avatar,
 
@@ -30,8 +29,6 @@ export const discord = new Discord(
   env.DISCORD_CLIENT_SECRET,
   `${getBaseUrl()}/api/auth/discord/callback`,
 )
-
-export const github = new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET)
 
 declare module 'lucia' {
   interface Register {

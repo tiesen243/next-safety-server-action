@@ -16,9 +16,7 @@ model User {
 
   email     String  @unique
   discordId String? @unique
-  githubId  Int?    @unique
 
-  name     String?
   userName String
   avatar   String?
 

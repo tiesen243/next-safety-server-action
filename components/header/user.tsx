@@ -22,7 +22,7 @@ export const User: React.FC = () => {
 
   return (
     <Link href="/profile" className="group flex items-center gap-2">
-      <p>{user.name ?? user.userName}</p>
+      <p>{user.userName}</p>
 
       <Image
         src={user.avatar ?? '/logo.svg'}
