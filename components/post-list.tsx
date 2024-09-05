@@ -11,7 +11,7 @@ export const PostList: React.FC<{ page?: number }> = async ({ page = 1 }) => {
   const { posts, totalPage } = res.data
 
   return (
-    <ul className="mx-auto mb-4 w-1/2 space-y-4">
+    <ul className="mx-auto mb-4 space-y-4 md:w-1/2">
       {posts.map((post) => (
         <li key={post.id} className="rounded-lg border p-4 shadow-md">
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">{post.content}</h3>
