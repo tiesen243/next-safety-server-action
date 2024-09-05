@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma'
 import type { User } from '@prisma/client'
-import { Discord, GitHub } from 'arctic'
+import { Discord } from 'arctic'
 import { Lucia } from 'lucia'
 
 import { env } from '@/env'
@@ -13,7 +13,6 @@ export const lucia = new Lucia(adapter, {
   sessionCookie: { expires: false, attributes: { secure: env.NODE_ENV === 'production' } },
   getUserAttributes: (attributes) => ({
     id: attributes.id,
-    githubId: attributes.githubId,
     discordId: attributes.discordId,
 
     email: attributes.email,
