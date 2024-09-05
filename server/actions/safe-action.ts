@@ -1,4 +1,4 @@
-import { createMiddleware, createSafeActionClient } from 'next-safe-action'
+import * as nsa from 'next-safe-action'
 import { zodAdapter } from 'next-safe-action/adapters/zod'
 import { z } from 'zod'
 
@@ -14,7 +14,7 @@ import { db } from '@/server/db'
  *
  * @see https://next-safe-action.dev/docs/define-actions/middleware#create-standalone-middleware
  */
-const context = createMiddleware().define(async ({ next }) => {
+const context = nsa.createMiddleware().define(async ({ next }) => {
   const { user, session } = await auth()
   return next({ ctx: { db, user, session } })
 })
@@ -24,11 +24,21 @@ const context = createMiddleware().define(async ({ next }) => {
  *
  * This is where the safe-action client is initialized, connecting the context.
  */
-const action = createSafeActionClient({
-  validationAdapter: zodAdapter(),
-  defaultValidationErrorsShape: 'flattened',
-  defineMetadataSchema: () => z.object({ name: z.string().min(1, 'Action name is required') }),
-}).use(context)
+const action = nsa
+  .createSafeActionClient({
+    validationAdapter: zodAdapter(),
+    defaultValidationErrorsShape: 'flattened',
+    defineMetadataSchema: () => z.object({ name: z.string().min(1, 'Action name is required') }),
+    handleServerError: ({ message }, { metadata }) => {
+      if (message) {
+        console.error(`[Server Error] ${metadata.name} threw an error: ${message}`)
+        return message
+      }
+
+      return nsa.DEFAULT_SERVER_ERROR_MESSAGE
+    },
+  })
+  .use(context)
 
 /**
  * Middleware for timing action execution and adding an artificial delay in development.
@@ -36,8 +46,9 @@ const action = createSafeActionClient({
  * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
  * network latency that would occur in production but not in local development.
  */
-const timmingMiddleware = createMiddleware<{ metadata: { name: string } }>().define(
-  async ({ next, metadata }) => {
+const timmingMiddleware = nsa
+  .createMiddleware<{ metadata: { name: string } }>()
+  .define(async ({ next, metadata }) => {
     const start = performance.now()
 
     const result = await next()
@@ -48,8 +59,7 @@ const timmingMiddleware = createMiddleware<{ metadata: { name: string } }>().def
     console.log(`[Action] ${metadata.name} took ${time}ms to execute`)
 
     return result
-  },
-)
+  })
 
 /**
  * Public (unauthenticated) action

@@ -24,6 +24,7 @@ export const uncachedAuth = async (): Promise<Auth> => {
       cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
     }
   } catch {}
+
   return result
 }
 

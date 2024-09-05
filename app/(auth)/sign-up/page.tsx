@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
-const Page: NextPage = () => {
-  return <div>Page</div>
-}
+import { SignUpForm } from '../_components/sign-up-form'
+
+const Page: NextPage = () => <SignUpForm />
 
 export default Page

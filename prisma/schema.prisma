@@ -12,11 +12,17 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  discordId String  @unique
-  userName  String
-  email     String?
-  avatar    String?
+  id String @id @default(cuid())
+
+  email     String  @unique
+  discordId String? @unique
+  githubId  Int?    @unique
+
+  name     String?
+  userName String
+  avatar   String?
+
+  password String?
 
   posts    Post[]
   sessions Session[]

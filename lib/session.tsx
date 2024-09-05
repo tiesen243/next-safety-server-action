@@ -21,12 +21,12 @@ export const SessionProvider: React.FC<{
   children: React.ReactNode
   user: User | null
   session: Session | null
-}> = ({ children, user, session }) => {
+}> = ({ children, session, user }) => {
   const isAuth = !!user && !!session
 
   return (
     <sessionContext.Provider
-      value={isAuth ? { isAuth, user, session } : { isAuth, user: null, session: null }}
+      value={isAuth ? { isAuth, session, user } : { isAuth, session: null, user: null }}
     >
       {children}
     </sessionContext.Provider>

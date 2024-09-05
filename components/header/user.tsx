@@ -1,34 +1,36 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { useSession } from '@/lib/session'
-import { actions } from '@/server/actions'
 
 export const User: React.FC = () => {
   const { isAuth, user } = useSession()
-  if (!isAuth) return <Link href="/api/auth/discord">Login</Link>
+  if (!isAuth)
+    return (
+      <div>
+        <Link href="/sign-up" className="hover:underline">
+          Register
+        </Link>
+        <span className="mx-2">|</span>
+        <Link href="/sign-in" className="hover:underline">
+          Login
+        </Link>
+      </div>
+    )
 
   return (
-    <div className="flex items-center gap-2">
+    <Link href="/profile" className="group flex items-center gap-2">
+      <p>{user.name ?? user.userName}</p>
+
       <Image
         src={user.avatar ?? '/logo.svg'}
         alt="avatar"
         width={28}
         height={28}
-        className="rounded-full object-cover"
+        className="rounded-full object-cover ring-2 ring-transparent group-hover:ring-ring"
       />
-
-      <div className="flex flex-col items-start">
-        <p>{user.userName}</p>
-        <button
-          onClick={() => actions.auth.logout()}
-          className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Logout
-        </button>
-      </div>
-    </div>
+    </Link>
   )
 }

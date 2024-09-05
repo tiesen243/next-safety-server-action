@@ -1,34 +1,36 @@
-import { discord, lucia } from '@/server/auth/lucia'
-import { db } from '@/server/db'
 import { OAuth2RequestError } from 'arctic'
-import { cookies } from 'next/headers'
 import { type NextRequest, NextResponse } from 'next/server'
+
+import { github, lucia } from '@/server/auth/lucia'
+import { db } from '@/server/db'
+import { cookies } from 'next/headers'
 
 export const GET = async (req: NextRequest) => {
   const url = new URL(req.url)
   const code = url.searchParams.get('code')
   const state = url.searchParams.get('state')
-  const storedState = req.cookies.get('discord_oauth_state')?.value ?? null
+  const storedState = req.cookies.get('github_oauth_state')?.value ?? null
   if (!code || !state || state !== storedState)
     return NextResponse.json({ message: 'Invalid state' }, { status: 400 })
 
   try {
-    const tokens = await discord.validateAuthorizationCode(code)
-    const discordUserRes = await fetch('https://discord.com/api/users/@me', {
+    const tokens = await github.validateAuthorizationCode(code)
+    const githubUserRes = await fetch('https://api.github.com/user', {
       headers: { Authorization: `Bearer ${tokens.accessToken}` },
     })
-    const discordUser = (await discordUserRes.json()) as DiscordUser
+    const githubUser = (await githubUserRes.json()) as GithubUser
 
     // check if user exists in database
-    const existedUser = await db.user.findUnique({ where: { email: discordUser.email } })
+    const existedUser = await db.user.findUnique({ where: { email: githubUser.email } })
     if (existedUser) {
       await db.user.update({
         where: { id: existedUser.id },
         data: {
-          discordId: discordUser.id,
-          userName: discordUser.username,
-          email: discordUser.email,
-          avatar: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`,
+          githubId: githubUser.id,
+          name: githubUser.name,
+          userName: githubUser.login,
+          email: githubUser.email,
+          avatar: githubUser.avatar_url,
         },
       })
 
@@ -41,10 +43,11 @@ export const GET = async (req: NextRequest) => {
 
     const newUser = await db.user.create({
       data: {
-        discordId: discordUser.id,
-        userName: discordUser.username,
-        email: discordUser.email,
-        avatar: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`,
+        githubId: githubUser.id,
+        name: githubUser.name,
+        userName: githubUser.login,
+        email: githubUser.email,
+        avatar: githubUser.avatar_url,
       },
     })
 
@@ -61,9 +64,10 @@ export const GET = async (req: NextRequest) => {
   }
 }
 
-interface DiscordUser {
-  id: string
-  username: string
-  avatar: string
+interface GithubUser {
+  id: number
+  login: string
+  name: string
   email: string
+  avatar_url: string
 }

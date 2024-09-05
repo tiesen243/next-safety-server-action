@@ -3,11 +3,12 @@ import '@/app/globals.css'
 import { GeistSans } from 'geist/font/sans'
 import { ThemeProvider } from 'next-themes'
 
+import { Header } from '@/components/header'
+import { Toaster } from '@/components/ui/sonner'
 import { seo } from '@/lib/seo'
+import { SessionProvider } from '@/lib/session'
 import { cn } from '@/lib/utils'
 import { auth } from '@/server/auth'
-import { SessionProvider } from '@/lib/session'
-import { Header } from '@/components/header'
 
 export const metadata = seo({})
 export const viewport = {
@@ -27,6 +28,7 @@ const RootLayout: React.FC<React.PropsWithChildren> = async ({ children }) => {
           <SessionProvider user={user} session={session}>
             <Header />
             {children}
+            <Toaster richColors />
           </SessionProvider>
         </ThemeProvider>
       </body>
