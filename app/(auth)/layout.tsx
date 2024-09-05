@@ -18,7 +18,9 @@ const AuthLayout: React.FC<React.PropsWithChildren> = async ({ children }) => {
         </div>
 
         <Button variant="outline" asChild>
-          <Link href="/api/auth/discord">Continue with Discord</Link>
+          <Link href="/api/auth/discord" prefetch={false}>
+            Continue with Discord
+          </Link>
         </Button>
       </div>
     </main>
