@@ -19,8 +19,10 @@ const Page: NextPage = async () => {
         {JSON.stringify(user, null, 2)}
       </pre>
 
+      <PasswordForm />
+
       <form
-        className="flex justify-center"
+        className="mx-auto mt-4 max-w-screen-md [&>*]:w-full"
         action={async () => {
           'use server'
           await actions.auth.logout()
@@ -29,8 +31,6 @@ const Page: NextPage = async () => {
       >
         <Button variant="secondary">Sign out</Button>
       </form>
-
-      <PasswordForm />
     </main>
   )
 }

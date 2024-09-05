@@ -15,8 +15,6 @@ export const CreatePost: React.FC = () => {
     onSuccess: () => formRef.current.reset(),
   })
 
-  console.log(result)
-
   if (!isAuth) return null
 
   return (
