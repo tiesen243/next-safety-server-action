@@ -18,7 +18,7 @@ export const GET = async (_: NextRequest, { params }: Props): Promise<ImageRespo
   const description = params.desc ?? seo({}).description!
 
   const style = {
-    width: '33.333%',
+    width: '30%',
     marginRight: '2rem',
     filter: 'invert(1)',
     WebkitFilter: 'invert(1)',
@@ -26,10 +26,10 @@ export const GET = async (_: NextRequest, { params }: Props): Promise<ImageRespo
 
   return new ImageResponse(
     (
-      <div tw="relative w-full h-full px-28 flex flex-col gap-8 items-center justify-center bg-black text-white">
+      <div tw="relative w-full h-full px-28 flex flex-col items-center justify-center bg-black text-white">
         {/*  eslint-disable-next-line @next/next/no-img-element */}
-        <img alt="Tiesen" src={`${getBaseUrl()}/logo.svg`} style={style} />
-        <h2 tw="text-4xl capitalize">{title}</h2>
+        <img alt={seo({}).applicationName!} src={`${getBaseUrl()}/logo.svg`} style={style} />
+        <h2 tw="my-8 text-4xl capitalize">{title}</h2>
         <p tw="text-xl">{description}</p>
       </div>
     ),
