@@ -19,7 +19,7 @@ export const seo = (params: Seo): Metadata => {
     metadataBase: new URL(getBaseUrl()),
     title,
     description,
-    applicationName: 'NSA',
+    applicationName: 'Yucky',
     twitter: { card: 'summary_large_image' },
     openGraph: { url, images, type: 'website' },
     icons: { icon: '/favicon.ico', shortcut: '/favicon-16x16.png', apple: '/apple-touch-icon.png' },
