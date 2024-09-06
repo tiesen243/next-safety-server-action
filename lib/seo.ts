@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
-import { getBaseUrl } from './utils'
+
+import { getBaseUrl } from '@/lib/utils'
 
 interface Seo {
   title?: string
