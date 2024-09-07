@@ -1,4 +1,4 @@
-# Next Safe Action
+# Next Safety Server Action
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-t3-app`](https://create.t3.gg/). It includes a simple example of how to use [next safe action](https://next-safe-action.dev) with [Lucia](https://lucia-auth.com) and [Prisma](https://prisma.io).
 
